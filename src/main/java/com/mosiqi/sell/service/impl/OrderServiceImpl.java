@@ -5,6 +5,8 @@ import com.mosiqi.sell.dataobject.OrderMaster;
 import com.mosiqi.sell.dataobject.ProductInfo;
 import com.mosiqi.sell.dto.CartDTO;
 import com.mosiqi.sell.dto.OrderDTO;
+import com.mosiqi.sell.enums.OrderStatusEnum;
+import com.mosiqi.sell.enums.PayStatusEnum;
 import com.mosiqi.sell.enums.ResultEnum;
 import com.mosiqi.sell.exception.SellException;
 import com.mosiqi.sell.repository.OrderDetailReporitory;
@@ -39,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     //事务回滚 异常
     @Transactional
-    public OrderDTO creat(OrderDTO orderDTO) {
+    public OrderDTO create(OrderDTO orderDTO) {
 
         String orderId = KeyUtil.genUniqueKey();
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
@@ -50,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
             // 2. compute total price for the order.
-            orderAmount = orderDetail.getProductPrice()
+            orderAmount = productInfo.getProductPrice()
                     .multiply(new BigDecimal(orderDetail.getProductQuantity()))
                     .add(orderAmount);
 
@@ -63,9 +65,11 @@ public class OrderServiceImpl implements OrderService {
 
         // 3. write orderMaster into database;
         OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(orderDTO, orderMaster);
         orderMaster.setOrderId(orderId);
         orderMaster.setOrderAmount(orderAmount);
-        BeanUtils.copyProperties(orderDTO, orderMaster);
+        orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
+        orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
         orderMasterRepository.save(orderMaster);
 
         // 4. subtract stock amount;

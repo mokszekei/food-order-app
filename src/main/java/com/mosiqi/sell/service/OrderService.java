@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
 
-    OrderDTO creat(OrderDTO orderDTO);
+    OrderDTO create(OrderDTO orderDTO);
 
     OrderDTO findOne(String orderId);
 
