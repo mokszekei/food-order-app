@@ -1,21 +1,18 @@
-package com.mosiqi.sell.dataobject;
+package com.mosiqi.sell.dto;
 
+import com.mosiqi.sell.dataobject.OrderDetail;
 import com.mosiqi.sell.enums.OrderStatusEnum;
 import com.mosiqi.sell.enums.PayStatusEnum;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-@Entity
 @Data
-@DynamicUpdate
-public class OrderMaster {
+public class OrderDTO {
 
-    @Id
     private String orderId;
 
     private String buyerName;
@@ -28,13 +25,13 @@ public class OrderMaster {
 
     private BigDecimal orderAmount;
 
-    private Integer orderStatus = OrderStatusEnum.NEW.getCode();
+    private Integer orderStatus;
 
-    private Integer payStatus = PayStatusEnum.WAIT.getCode();
+    private Integer payStatus;
 
     private Date createTime;
 
     private Date updateTime;
 
-
+    List<OrderDetail> orderDetailList;
 }
