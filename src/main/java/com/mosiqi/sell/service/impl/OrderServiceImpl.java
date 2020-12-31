@@ -15,9 +15,11 @@ import com.mosiqi.sell.repository.OrderMasterRepository;
 import com.mosiqi.sell.service.OrderService;
 import com.mosiqi.sell.service.ProductService;
 import com.mosiqi.sell.utils.KeyUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -113,8 +116,40 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDTO cancel(OrderDTO orderDTO) {
-        return null;
+        OrderMaster orderMaster = new OrderMaster();
+
+        //Check order status
+        if(!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())){
+            log.error("[Cancel Order] order status is not correct");
+            throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
+        }
+
+        //Modify order status
+        orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
+        BeanUtils.copyProperties(orderDTO,orderMaster);
+        OrderMaster updateResult = orderMasterRepository.save(orderMaster);
+        if(updateResult == null){
+            log.error("[Cancel Order] updating order status failed");
+            throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
+        }
+
+        //Modify stock
+        if(CollectionUtils.isEmpty(orderDTO.getOrderDetailList())){
+            log.error("[Cancel Order] no order detail in order");
+            throw new SellException(ResultEnum.ORDER_DETAIL_EMPTY);
+        }
+        List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream()
+                .map(e -> new CartDTO(e.getProductId(),e.getProductQuantity()))
+                .collect(Collectors.toList());
+        productService.increaseStock(cartDTOList);
+
+        //Refund the user if already paid
+        if(orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())){
+            //TODO
+        }
+        return orderDTO;
     }
 
     @Override

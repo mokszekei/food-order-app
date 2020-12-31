@@ -2,6 +2,7 @@ package com.mosiqi.sell.service.impl;
 
 import com.mosiqi.sell.dataobject.OrderDetail;
 import com.mosiqi.sell.dto.OrderDTO;
+import com.mosiqi.sell.enums.OrderStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,6 +73,14 @@ public class OrderServiceImplTest {
         PageRequest request = PageRequest.of(0,2);
         Page<OrderDTO> orderDTOPage = orderService.findList(BUYER_OPENID, request);
         Assert.assertNotEquals(0,orderDTOPage.getTotalElements());
+    }
+
+    @Test
+    public void cancel() throws Exception{
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.cancel(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.CANCEL.getCode(), result.getOrderStatus());
+
     }
 
 

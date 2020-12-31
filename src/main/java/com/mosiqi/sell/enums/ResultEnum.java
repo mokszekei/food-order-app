@@ -9,6 +9,9 @@ public enum ResultEnum {
     PRODUCT_STOCK_ERROR(11,"Stock goes wrong"),
     ORDER_NOT_EXIST(12,"This order doesn't exist"),
     ORDER_DETAIL_NOT_EXIST(13,"Order detail doesn't exist"),
+    ORDER_STATUS_ERROR(14,"order status goes wrong"),
+    ORDER_UPDATE_FAIL(15,"order updating failed"),
+    ORDER_DETAIL_EMPTY(16,"The order is empty")
     ;
 
 
