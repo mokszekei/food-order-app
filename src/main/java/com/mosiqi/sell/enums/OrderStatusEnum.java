@@ -7,7 +7,7 @@ public enum OrderStatusEnum {
 
     NEW(0, "new order"),
     FINISHED(1, "finished"),
-    CANCEL(2, "calceled");
+    CANCEL(2, "canceled");
 
     private Integer code;
 
