@@ -3,6 +3,7 @@ package com.mosiqi.sell.service.impl;
 import com.mosiqi.sell.dataobject.OrderDetail;
 import com.mosiqi.sell.dto.OrderDTO;
 import com.mosiqi.sell.enums.OrderStatusEnum;
+import com.mosiqi.sell.enums.PayStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -80,8 +81,20 @@ public class OrderServiceImplTest {
         OrderDTO orderDTO = orderService.findOne(ORDER_ID);
         OrderDTO result = orderService.cancel(orderDTO);
         Assert.assertEquals(OrderStatusEnum.CANCEL.getCode(), result.getOrderStatus());
-
     }
 
+    @Test
+    public void finish() throws Exception{
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.finish(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.FINISHED.getCode(), result.getOrderStatus());
+    }
+
+    @Test
+    public void paid() throws Exception{
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.paid(orderDTO);
+        Assert.assertEquals(PayStatusEnum.SUCCESS.getCode(), result.getPayStatus());
+    }
 
 }

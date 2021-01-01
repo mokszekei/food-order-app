@@ -11,7 +11,8 @@ public enum ResultEnum {
     ORDER_DETAIL_NOT_EXIST(13,"Order detail doesn't exist"),
     ORDER_STATUS_ERROR(14,"order status goes wrong"),
     ORDER_UPDATE_FAIL(15,"order updating failed"),
-    ORDER_DETAIL_EMPTY(16,"The order is empty")
+    ORDER_DETAIL_EMPTY(16,"The order is empty"),
+    ORDER_PAY_STATUS_ERROR(17,"Pay status is not correct")
     ;
 
 
