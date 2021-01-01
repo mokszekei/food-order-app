@@ -54,7 +54,7 @@ public class BuyerOrderController {
         return ResultVOUtil.success(map);
     }
 
-    // show order list
+    // show order list (no order detail)
     @GetMapping("/list")
     public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -68,6 +68,24 @@ public class BuyerOrderController {
         Page<OrderDTO> orderDTOPage = orderService.findList(openid, request);
 
         return ResultVOUtil.success(orderDTOPage.getContent());
+    }
 
+    //show order detail
+    @GetMapping("/detail")
+    public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
+                                     @RequestParam("orderId") String orderId){
+        //TODO not safe
+        OrderDTO orderDTO = orderService.findOne(orderId);
+        return ResultVOUtil.success(orderDTO);
+    }
+
+    @PostMapping("/cancel")
+    public ResultVO<OrderDTO> cancel(@RequestParam("openid") String openid,
+                                     @RequestParam("orderId") String orderId){
+        //TODO not safe
+        OrderDTO orderDTO = orderService.findOne(orderId);
+        orderService.cancel(orderDTO);
+
+        return ResultVOUtil.success();
     }
 }

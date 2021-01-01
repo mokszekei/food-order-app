@@ -1,5 +1,6 @@
 package com.mosiqi.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mosiqi.sell.dataobject.OrderDetail;
 import com.mosiqi.sell.enums.OrderStatusEnum;
@@ -9,10 +10,13 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+//if filed is null, don't return it to front-end
 public class OrderDTO {
 
     private String orderId;
