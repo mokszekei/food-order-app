@@ -1,8 +1,10 @@
 package com.mosiqi.sell.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mosiqi.sell.dataobject.OrderDetail;
 import com.mosiqi.sell.enums.OrderStatusEnum;
 import com.mosiqi.sell.enums.PayStatusEnum;
+import com.mosiqi.sell.utils.serializer.Date2LongSerializer;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -29,8 +31,10 @@ public class OrderDTO {
 
     private Integer payStatus;
 
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
 
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
 
     List<OrderDetail> orderDetailList;
