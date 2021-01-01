@@ -7,6 +7,7 @@ import com.mosiqi.sell.dto.OrderDTO;
 import com.mosiqi.sell.enums.ResultEnum;
 import com.mosiqi.sell.exception.SellException;
 import com.mosiqi.sell.form.OrderForm;
+import com.mosiqi.sell.service.BuyerService;
 import com.mosiqi.sell.service.OrderService;
 import com.mosiqi.sell.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class BuyerOrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private BuyerService buyerService;
 
     // Create order
     @PostMapping("/create")
@@ -74,18 +78,21 @@ public class BuyerOrderController {
     @GetMapping("/detail")
     public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
                                      @RequestParam("orderId") String orderId){
-        //TODO not safe
-        OrderDTO orderDTO = orderService.findOne(orderId);
+//        //not safe
+//        OrderDTO orderDTO = orderService.findOne(orderId);
+//        return ResultVOUtil.success(orderDTO);
+
+        OrderDTO orderDTO = buyerService.findOrderOne(openid,orderId);
         return ResultVOUtil.success(orderDTO);
     }
 
     @PostMapping("/cancel")
     public ResultVO<OrderDTO> cancel(@RequestParam("openid") String openid,
                                      @RequestParam("orderId") String orderId){
-        //TODO not safe
-        OrderDTO orderDTO = orderService.findOne(orderId);
-        orderService.cancel(orderDTO);
-
+//        //not safe
+//        OrderDTO orderDTO = orderService.findOne(orderId);
+//        orderService.cancel(orderDTO);
+        buyerService.cancelOrder(openid,orderId);
         return ResultVOUtil.success();
     }
 }

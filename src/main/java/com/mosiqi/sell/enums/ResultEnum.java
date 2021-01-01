@@ -15,6 +15,7 @@ public enum ResultEnum {
     ORDER_DETAIL_EMPTY(16,"The order is empty"),
     ORDER_PAY_STATUS_ERROR(17,"Pay status is not correct"),
     CART_EMPTY(18,"Cart is empty"),
+    ORDER_OWNER_ERROR(19,"order doesn't belong to current user"),
     ;
 
 
