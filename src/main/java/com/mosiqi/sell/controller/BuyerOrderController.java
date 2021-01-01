@@ -11,14 +11,16 @@ import com.mosiqi.sell.service.OrderService;
 import com.mosiqi.sell.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -52,5 +54,20 @@ public class BuyerOrderController {
         return ResultVOUtil.success(map);
     }
 
+    // show order list
+    @GetMapping("/list")
+    public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
+                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                         @RequestParam(value = "size", defaultValue = "10") Integer size){
+        if(StringUtils.isEmpty(openid)){
+            log.error("[order list] openid is empty");
+            throw new SellException(ResultEnum.PARAM_ERROR);
+        }
 
+        PageRequest request = PageRequest.of(page,size);
+        Page<OrderDTO> orderDTOPage = orderService.findList(openid, request);
+
+        return ResultVOUtil.success(orderDTOPage.getContent());
+
+    }
 }
