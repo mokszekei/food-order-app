@@ -16,6 +16,7 @@ public enum ResultEnum {
     ORDER_PAY_STATUS_ERROR(17,"Pay status is not correct"),
     CART_EMPTY(18,"Cart is empty"),
     ORDER_OWNER_ERROR(19,"order doesn't belong to current user"),
+    WECHAT_MP_ERROR(20,"Wechat Mp account error"),
     ;
 
 
