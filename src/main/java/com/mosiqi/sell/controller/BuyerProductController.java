@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("buyer/product")
-@NoArgsConstructor
+//@NoArgsConstructor
 public class BuyerProductController {
 
-//    @Autowired
+    @Autowired
     private ProductService productService;
 
-//    @Autowired
+    @Autowired
     private CategoryService categoryService;
 
     @GetMapping("/list")
