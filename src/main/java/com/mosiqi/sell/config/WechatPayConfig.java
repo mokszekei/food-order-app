@@ -23,7 +23,7 @@ public class WechatPayConfig {
         wxPayH5Config.setMchId(accountConfig.getMchId());
         wxPayH5Config.setMchKey(accountConfig.getMchKey());
         wxPayH5Config.setKeyPath(accountConfig.getKeyPath());
-
+        wxPayH5Config.setNotifyUrl(accountConfig.getNotifyUrl());
         bestPayService.setWxPayH5Config(wxPayH5Config);
         return bestPayService;
     }

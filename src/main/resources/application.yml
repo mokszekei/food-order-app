@@ -4,7 +4,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.0.69/sell?characterEncoding=utf-8&useSSL=false&&serverTimezone=UTC
+    url: jdbc:mysql://192.168.0.70/sell?characterEncoding=utf-8&useSSL=false&&serverTimezone=UTC
   jpa:
     show-sql: true
   jackson:
@@ -21,3 +21,4 @@ wechat:
   mchId: 1483469312
   mchKey: 098F6BCD4621D373CADE4E832627B4F6
   keyPath: /Users/mosiqi/food-order-app/doc/h5.p12
+  notifyUrl: http://mosiqi.natapp1.cc/sell/pay/notify
