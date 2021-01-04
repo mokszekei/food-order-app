@@ -7,4 +7,6 @@ import com.mosiqi.sell.dto.OrderDTO;
 public interface PayService {
 
     PayResponse create(OrderDTO orderDTO);
+
+    PayResponse notify(String notifyData);
 }

@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 public class WechatAccountConfig {
 
     /** 公众平台ID */
-    @Value("${wechat.mpAppId}")
+//    @Value("${wechat.mpAppId}")
     private String mpAppId;
 
     /** 公众平台密钥 */
-    @Value("${wechat.mpAppSecret}")
+//    @Value("${wechat.mpAppSecret}")
     private String mpAppSecret;
 
 //    /** 开放平台id */
@@ -29,18 +29,18 @@ public class WechatAccountConfig {
 //    private String openAppSecret;
 
     /** 商户号 */
-    @Value("${wechat.mchId}")
+//    @Value("${wechat.mchId}")
     private String mchId;
 
     /** 商户密钥 */
-    @Value("${wechat.mchKey}")
+//    @Value("${wechat.mchKey}")
     private String mchKey;
 
     /** 商户证书路径 */
-    @Value("${wechat.keyPath}")
+//    @Value("${wechat.keyPath}")
     private String keyPath;
 
     /** 微信支付异步通知地址 */
-    @Value("${wechat.notifyUrl}")
+//    @Value("${wechat.notifyUrl}")
     private String notifyUrl;
 }

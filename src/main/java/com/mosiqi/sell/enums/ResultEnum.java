@@ -17,6 +17,7 @@ public enum ResultEnum {
     CART_EMPTY(18,"Cart is empty"),
     ORDER_OWNER_ERROR(19,"order doesn't belong to current user"),
     WECHAT_MP_ERROR(20,"Wechat Mp account error"),
+    WXPAY_NOTIFY_MONEY_VERIFY_ERROR(21,"payment from wechat async notification is different from order ")
     ;
 
 
