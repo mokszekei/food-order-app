@@ -13,6 +13,7 @@ import com.mosiqi.sell.exception.SellException;
 import com.mosiqi.sell.repository.OrderDetailReporitory;
 import com.mosiqi.sell.repository.OrderMasterRepository;
 import com.mosiqi.sell.service.OrderService;
+import com.mosiqi.sell.service.PayService;
 import com.mosiqi.sell.service.ProductService;
 import com.mosiqi.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMasterRepository orderMasterRepository;
+
+    @Autowired
+    private PayService payService;
 
     @Override
     //事务回滚 异常
@@ -149,6 +153,7 @@ public class OrderServiceImpl implements OrderService {
         //Refund the user if already paid
         if(orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())){
             //TODO
+            payService.refund(orderDTO);
         }
         return orderDTO;
     }
@@ -198,5 +203,13 @@ public class OrderServiceImpl implements OrderService {
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
         return orderDTO;
+    }
+
+    @Override
+    public Page<OrderDTO> findList(Pageable pageable) {
+        Page<OrderMaster> orderMasterPage = orderMasterRepository.findAll(pageable);
+        List<OrderDTO> orderDTOList = OrderMaster2OrderDTOConverter.convert(orderMasterPage.getContent());
+        Page<OrderDTO> orderDTOPage = new PageImpl<>(orderDTOList, pageable, orderMasterPage.getTotalElements());
+        return orderDTOPage;
     }
 }

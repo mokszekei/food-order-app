@@ -5,6 +5,7 @@ import com.mosiqi.sell.service.OrderService;
 import com.mosiqi.sell.service.PayService;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.criterion.Order;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,15 @@ public class PayServiceImplTest{
 
     @Test
     public void create() throws Exception{
-
 //        OrderDTO orderDTO = new OrderDTO();
         OrderDTO orderDTO = orderService.findOne("1609483667313228956");
         payService.create(orderDTO);
+    }
+
+    @Test
+    public void refund(){
+        OrderDTO orderDTO = orderService.findOne("1609483667313228956");
+        payService.refund(orderDTO);
+
     }
 }

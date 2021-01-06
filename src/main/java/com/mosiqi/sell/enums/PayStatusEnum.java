@@ -3,7 +3,7 @@ package com.mosiqi.sell.enums;
 import lombok.Getter;
 
 @Getter
-public enum PayStatusEnum{
+public enum PayStatusEnum implements CodeEnum{
 
     WAIT(0, "waiting for payment"),
     SUCCESS(1, "payment succeed");

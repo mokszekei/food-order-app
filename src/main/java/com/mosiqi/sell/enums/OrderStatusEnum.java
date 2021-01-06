@@ -3,7 +3,7 @@ package com.mosiqi.sell.enums;
 import lombok.Getter;
 
 @Getter
-public enum OrderStatusEnum {
+public enum OrderStatusEnum implements CodeEnum{
 
     NEW(0, "new order"),
     FINISHED(1, "finished"),

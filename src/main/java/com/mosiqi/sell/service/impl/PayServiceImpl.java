@@ -3,6 +3,8 @@ package com.mosiqi.sell.service.impl;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
+import com.lly835.bestpay.model.RefundRequest;
+import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import com.lly835.bestpay.utils.JsonUtil;
 import com.mosiqi.sell.dto.OrderDTO;
@@ -58,7 +60,7 @@ public class PayServiceImpl implements PayService {
         }
 
         if (!MathUtil.equals(orderDTO.getOrderAmount().doubleValue(), payResponse.getOrderAmount())) {
-            log.error("[微信支付] 异步通知，订单金额不一致，orderId={},微信通知金额={},系统金额={}",
+            log.error("[wechat pay] async notify, order price not consistent，orderId={},notice price={},system price={}",
                     payResponse.getOrderId(),
                     payResponse.getOrderAmount(),
                     orderDTO.getOrderAmount());
@@ -70,7 +72,19 @@ public class PayServiceImpl implements PayService {
         return payResponse;
     }
 
+    @Override
+    public RefundResponse refund(OrderDTO orderDTO) {
 
+        RefundRequest refundRequest = new RefundRequest();
+        refundRequest.setOrderId(orderDTO.getOrderId());
+        refundRequest.setOrderAmount(orderDTO.getOrderAmount().doubleValue());
+        refundRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
+        log.info("[wechat refund] request={}", JsonUtil.toJson(refundRequest));
+        RefundResponse refundResponse = bestPayService.refund(refundRequest);
+        log.info("[wechat refund] response={}", JsonUtil.toJson(refundResponse));
+
+        return refundResponse;
+    }
 }
 
 
