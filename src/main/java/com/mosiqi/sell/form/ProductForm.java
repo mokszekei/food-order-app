@@ -20,8 +20,5 @@ public class ProductForm {
 
     private String productIcon;
 
-    private Integer productStatus = ProductStatusEnum.UP.getCode();
-
     private Integer categoryType;
-
 }
