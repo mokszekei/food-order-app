@@ -20,6 +20,10 @@ public enum ResultEnum {
     WECHAT_MP_ERROR(20,"Wechat Mp account error"),
     WXPAY_NOTIFY_MONEY_VERIFY_ERROR(21,"payment from wechat async notification is different from order "),
     ORDER_CANCEL_SUCCESS(22,"Order has been canceled successfully!"),
+    ORDER_FINISH_SUCCESS(23,"Order has been finished successfully"),
+    PRODUCT_STATUS_ERROR(24, "product status not correct"),
+    LOGIN_FAIL(25, "login fail"),
+    LOGOUT_SUCCESS(26, "Already log out"),
     ;
 
 

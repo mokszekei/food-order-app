@@ -1,5 +1,8 @@
 package com.mosiqi.sell.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mosiqi.sell.enums.ProductStatusEnum;
+import com.mosiqi.sell.utils.EnumUtil;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -34,5 +37,10 @@ public class ProductInfo {
     private Date createTime;
 
     private Date updateTime;
+
+    @JsonIgnore
+    public ProductStatusEnum getProductStatusEnum() {
+        return EnumUtil.getByCode(productStatus, ProductStatusEnum.class);
+    }
 
 }
