@@ -30,7 +30,7 @@ public class ProductInfo {
 
     private String productIcon;
 
-    private Integer productStatus; /** 0 normal，1 out of stock. */
+    private Integer productStatus = ProductStatusEnum.UP.getCode(); /** 0 normal，1 out of stock. */
 
     private Integer categoryType;
 
