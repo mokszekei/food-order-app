@@ -18,8 +18,15 @@ wechat:
   mpAppId: wxd898fcb01713c658
 #  mpAppId: wxcd727d4b6740696a # 我自己的
   mpAppSecret: 562d3fdf26d1e95174202bb0864451d8
-
+  openAppId: wx6ad144e54af67d87
+  openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
   mchId: 1483469312
   mchKey: 098F6BCD4621D373CADE4E832627B4F6
   keyPath: /Users/mosiqi/food-order-app/doc/h5.p12
   notifyUrl: http://mosiqi.natapp1.cc/sell/pay/notify
+
+
+projectUrl:
+  wechatMpAuthorize: http://mosiqi.natapp1.cc
+  wechatOpenAuthorize: http://mosiqi.natapp1.cc
+  sell: http://mosiqi.natapp1.cc
