@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.UUID;
@@ -56,6 +58,43 @@ public class SellerUserController {
         CookieUtil.set(response, CookieConstant.TOKEN, token, expire);
 
         return new ModelAndView("redirect:" + projectUrlConfig.getSell() + "/sell/seller/order/list");
-
     }
+
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpServletRequest request,
+                               HttpServletResponse response,
+                               Map<String,Object> map){
+
+        // 1. find corresponding token
+        Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
+        if (cookie != null) {
+            //2. remove token from redis
+            redisTemplate.opsForValue().getOperations().delete(String.format(RedisConstant.TOKEN_PREFIX, cookie.getValue()));
+
+            //3. remove token from cookie
+            CookieUtil.set(response, CookieConstant.TOKEN, null, 0);
+        }
+
+        map.put("msg", ResultEnum.LOGOUT_SUCCESS.getMessage());
+        map.put("url", "/sell/seller/order/list");
+        return new ModelAndView("common/success", map);
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
