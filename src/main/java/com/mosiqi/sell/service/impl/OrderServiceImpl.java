@@ -15,6 +15,7 @@ import com.mosiqi.sell.repository.OrderMasterRepository;
 import com.mosiqi.sell.service.OrderService;
 import com.mosiqi.sell.service.PayService;
 import com.mosiqi.sell.service.ProductService;
+import com.mosiqi.sell.service.WebSocket;
 import com.mosiqi.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.criterion.Order;
@@ -48,6 +49,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     //事务回滚 异常
@@ -89,6 +93,9 @@ public class OrderServiceImpl implements OrderService {
                 .map(e -> new CartDTO(e.getProductId(), e.getProductQuantity()))
                 .collect(Collectors.toList());
         productService.decreaseStock(cartDTOList);
+
+        //send websocket message
+        webSocket.sendMessage(orderDTO.getOrderId());
 
         return orderDTO;
     }
