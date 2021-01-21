@@ -7,6 +7,9 @@ import com.mosiqi.sell.enums.ResultEnum;
 import com.mosiqi.sell.exception.SellException;
 import com.mosiqi.sell.repository.ProductInfoRepository;
 import com.mosiqi.sell.service.ProductService;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,14 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "product")
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductInfoRepository repository;
 
     @Override
+    @Cacheable(key = "123")
     public ProductInfo findOne(String productId) {
         ProductInfo productInfo = repository.findById(productId).orElse(null);
         return productInfo;
@@ -38,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CachePut(key = "123")
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
     }
